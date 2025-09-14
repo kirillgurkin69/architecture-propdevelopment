@@ -1,0 +1,27 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_TOP_DOWN()
+
+Person(owner, "Собственник жилья", "Пользуется мобильным приложением для ЖКУ и Умного дома")
+
+System_Boundary(hcs_system, "Компания PropDevelopment: Группа сервисов ЖКУ") {
+  System(service_app, "Cервис для предоставления услуг ЖКУ", "Основная система для ЖКУ и управления недвижимостью")
+  System(mobile_app, "Витрина сервисов для собственников", "Позволяет собственникам получать услуги ЖКУ и управлять Умным домом")
+  System(crm_app, "CRM", "Управляет данными о собственниках")
+}
+
+System_Ext(hcs_partner, "Система партнера ЖКХ", "Предоставляет сервисы управляющей компании")
+System_Ext(payment_partner, "Система платежного провайдера", "Предоставляет возможность проведения платежей за ЖКУ")
+System_Ext(smart_home_partner, "Система партнёра «Умный дом»", "Предоставляет новые сервисы: Интеллектуальный домофон и Интеллектуальный шлагбаум")
+
+Rel(owner, mobile_app, "использует")
+Rel(mobile_app, service_app, "Обращается для получения данных и услуг ЖКУ")
+Rel(service_app, crm_app, "Получение клиентских данных")
+Rel(mobile_app, crm_app, "Получение клиентских данных")
+Rel(service_app, smart_home_partner, "Интеграция с сервисами «Умный дом»")
+Rel(service_app, hcs_partner, "Интеграция с сервисами управлющей компании")
+Rel(service_app, payment_partner, "Интеграция с платежным шлюзом")
+
+
+@enduml
